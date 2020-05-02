@@ -1,0 +1,25 @@
+
+html {
+  font-family: 'Merriweather', serif;
+  font-size: 20px;
+  color:black;
+  background-color: yellow;
+}
+body {
+  width: 50%;
+  margin: 0 auto;
+  padding: 0 20px 50px 250px;
+  border-style:solid;
+}
+ul {
+  border-color: red;
+  border-style: dotted;
+}
+li {
+  font-family: 'Merriweather', 'serif';
+  font-size: 10px;
+  color:grey;
+  padding: 5px;
+  border: 1px dotted green;
+  margin: 4px;
+}
