@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import PhonebookDataService from './services/PhonebookDataService'
+import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-  
   const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newPhoneNumber, setNewPhoneNumber] = useState('')  
@@ -30,6 +30,7 @@ const App = () => {
   */
   const addPerson = (event) => {
     event.preventDefault()
+
     const newPerson = {
       id: persons.length +1,
       name: newName,
@@ -38,26 +39,20 @@ const App = () => {
     PhonebookDataService
       .create(newPerson)
       .then(response => {
+        console.log("Got new persons from book after adding")
         setPersons(persons.concat(response))
-        setNewName("gugus")        
+        setNewName("") 
+        setNewPhoneNumber("") 
+
         }
       ).catch(error =>  {
         console.log("error posting", error)
       }) 
-        
+      setPersonsToShow(persons)
+
   }
 
-  const setName = (event) => {
-    console.log(' Name changed to ', event.target.value)
-    setNewName(event.target.value)
-  }
-  
-  const setPhoneNumber = (event) =>  {
-    setNewPhoneNumber(event.target.value)
-  }
-  
-
-  const changeFilter =(event) => {
+  const changeFilter = (event) => {
     /* Apply filter only when the string is not an null/empty string
     */
     setPersonsToShow(!event.target.value ? persons : persons.filter
@@ -68,13 +63,15 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2 className="app-title">Phonebook</h2>
+      
       <PersonForm addPerson={addPerson} 
-        setName ={setName} 
-        setPhoneNumber={setPhoneNumber}
+        newName = {newName} setNewName={setNewName}
+        newPhoneNumber={newPhoneNumber} setNewPhoneNumber={setNewPhoneNumber}
         changeFilter = {changeFilter}>
       </PersonForm>
-      <h2>Numbers</h2>
+      <br></br>
+      <h2 className="contacts">Numbers</h2>
       <Persons personsToShow={personsToShow}></Persons>
     </div>
 

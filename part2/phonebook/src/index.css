@@ -7,6 +7,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h2.app-title {
+  text-align: center;
+  color: lightblue;
+}
+
+h2.contacts {
+  text-align: center;
+  color: lightsalmon;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
