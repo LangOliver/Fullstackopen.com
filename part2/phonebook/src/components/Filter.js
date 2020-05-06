@@ -1,12 +1,14 @@
 import React from 'react';
+import Form from 'react-bootstrap/Form';
+
 const Filter = (props) => {
     return (
 
-      <form>
-      <div>
-        filter shown with <input onChange={props.changeFilter}></input>
-      </div>
-    </form>
+
+            <Form.Control placeholder="Filter contacts "
+            onChange={props.changeFilter}/>
+  
+
     )
 }
 

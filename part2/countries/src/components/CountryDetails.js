@@ -1,4 +1,5 @@
 import React from 'react';
+import Weather from './Weather';
 
 const CountryDetail = (props) => (
     <div>
@@ -11,6 +12,7 @@ const CountryDetail = (props) => (
              <li key={language.name}>{language.name}</li>)}
              <img src={props.filteredCountry.flag} height="50px"/>
         </ul>)
+        <Weather country={props.filteredCountry.name}></Weather>
 </div>
 );
 

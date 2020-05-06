@@ -2,12 +2,11 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
 import SearchForm from './components/SearchForm';
-import ShowCountries from './components/ShowCountries';
-import ShowCountry from './components/ShowCountry';
-
+import Countries from './components/Countries';
 
 function App() {
 
+  // variable api_key has now the value set in startup 
  const [filterName, setFilter] = useState("")
  const [countries, setCountries] = useState([])
  const [filteredCountries, setFilteredCountries] = useState([])
@@ -23,23 +22,21 @@ function App() {
 
 /* Someone typed in the filter field, lets filter the countries and return
 a reduced set of them matching country name and the filter input,
-if less than 10 elements are found */
+ignoring upper/lower case */
 const changeFilter =(event) => {
  setFilter(event.target.value) 
  const tempFilteredCountries = countries.filter(country =>  
- country.name.includes(event.target.value))
+ country.name.toUpperCase().includes(event.target.value.toUpperCase()))
 setFilteredCountries(tempFilteredCountries)
 
 }
 
-
   return (
     <div>
       <SearchForm changeFilter = {changeFilter}/>
-      <ShowCountries 
+      <Countries 
       filteredCountries = {filteredCountries} /> 
      
-      
     </div>
   );
 }
