@@ -12,7 +12,6 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newPhoneNumber, setNewPhoneNumber] = useState('')  
   // In the beginning, show all all persons
-  const [ personsToShow, setPersonsToShow] = useState(persons)
   
   
    useEffect(() => {
@@ -20,7 +19,6 @@ const App = () => {
       .then(response => {
         console.log("effect response is", response)
         setPersons(response)
-        setPersonsToShow(response) 
       })
   }, [])
 
@@ -41,7 +39,6 @@ const App = () => {
       .create(newPerson)
       .then(response => {
         setPersons(persons.concat(response))
-        setPersonsToShow(persons.concat(response))
         setNewName("") 
         setNewPhoneNumber("") 
         }
@@ -50,14 +47,21 @@ const App = () => {
       }) 
 
   }
-
-  const changeFilter = (event) => {
-    /* Apply filter only when the string is not an null/empty string
+    /* Reload the Persons from the database, 
+    and apply filter only when the string is not an null/empty string,
+    else just return the whole reponse
     */
-    setPersonsToShow(!event.target.value ? persons : persons.filter
+  const changeFilter = (event) => {
+   
+   const currentFilter = event.target.value
+   PhonebookDataService.getAll()
+   .then(response => {
+     setPersons(!currentFilter ? response : response.filter
       (person =>  
-      person.name.includes(event.target.value)
+      person.name.includes(currentFilter)
     ))
+   })
+    
   }
 
   return (
@@ -72,10 +76,7 @@ const App = () => {
       <br></br>
       <h2 className="contacts">Numbers</h2>
       
-    <ListGroup>
-      {personsToShow.map(person => 
-      <ListGroup.Item key={person.id}>{person.name} {person.number}</ListGroup.Item>)}
-    </ListGroup>
+      <Persons personsToShow={persons}></Persons>
     </div>
 
   )

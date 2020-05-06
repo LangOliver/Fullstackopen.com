@@ -1,13 +1,16 @@
 import React from 'react';
+import Person from './Person'
 import ListGroup from 'react-bootstrap/ListGroup'
 
 const Persons = (props) => {
 
   return (
-    
     <ListGroup>
     {props.personsToShow.map(person => 
-      <ListGroup.Item key={person.id}>{person.name} {person.number}</ListGroup.Item>)}
+      <Person key={person.id} person={person} personsToShow={props.personsToShow}></Person>
+      )
+      }
+
   </ListGroup>
   )
 }

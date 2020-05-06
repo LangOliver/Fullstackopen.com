@@ -11,7 +11,7 @@ const PersonForm = (props) => {
     <div>
       <Container>
             <Form onSubmit={props.addPerson} >
-              <Form.Group controlID="PhoneBookForm">
+              <Form.Group controlId="PhoneBookForm">
                   <Form.Control placeholder="First name" 
                   onChange={e => props.setNewName(e.target.value)}
                   value={props.newName}
