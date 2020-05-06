@@ -29,7 +29,8 @@ const PersonForm = (props) => {
               </Form.Row>
             </Form>
  
-  </Container>
+    </Container>
+    
     </div>
    )
 }

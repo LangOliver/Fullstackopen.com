@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import React, { useState, useEffect } from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import ListGroup from 'react-bootstrap/ListGroup'
 import PhonebookDataService from './services/PhonebookDataService'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +12,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newPhoneNumber, setNewPhoneNumber] = useState('')  
   // In the beginning, show all all persons
-  const [personsToShow, setPersonsToShow] = useState(persons)
+  const [ personsToShow, setPersonsToShow] = useState(persons)
   
   
    useEffect(() => {
@@ -39,16 +40,14 @@ const App = () => {
     PhonebookDataService
       .create(newPerson)
       .then(response => {
-        console.log("Got new persons from book after adding")
         setPersons(persons.concat(response))
+        setPersonsToShow(persons.concat(response))
         setNewName("") 
         setNewPhoneNumber("") 
-
         }
       ).catch(error =>  {
         console.log("error posting", error)
       }) 
-      setPersonsToShow(persons)
 
   }
 
@@ -72,7 +71,11 @@ const App = () => {
       </PersonForm>
       <br></br>
       <h2 className="contacts">Numbers</h2>
-      <Persons personsToShow={personsToShow}></Persons>
+      
+    <ListGroup>
+      {personsToShow.map(person => 
+      <ListGroup.Item key={person.id}>{person.name} {person.number}</ListGroup.Item>)}
+    </ListGroup>
     </div>
 
   )
