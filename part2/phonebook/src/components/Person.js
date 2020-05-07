@@ -5,35 +5,37 @@ import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import PhoneBookDataService from './../services/PhonebookDataService';
 
-const Person = (props) => {
-    const person = props.person;
-
-    const handleDelete = (id) => {
-        console.log('Deleting with id',id)
+class Person extends React.Component {
+    
+    constructor(props) {
+        super(props);
+    }
+      
+    handleDelete(id, persons, setPersons) {
         PhoneBookDataService.deleteIt(id)
         .then(response => {
-  
-      })
+            setPersons(persons.filter(person =>
+                person.id !== id))
+      })}
+    
+    render () {
+        return (
+            <ListGroup.Item 
+                key={this.props.person.id}>
+                {this.props.person.name} 
+                {this.props.person.number} 
+                <Button 
+                    variant="outline-danger"
+                    className="delete-btn"
+                    onClick={e => this.handleDelete(this.props.person.id,
+                     this.props.persons, 
+                     this.props.setPersons)}>
+                    X
+                </Button>{' '}
+            </ListGroup.Item>
+    ) 
     }
 
-    return (
-                    <ListGroup.Item 
-                        key={person.id}>
-                        {person.name} 
-                        {person.number} 
-                        <Button 
-                            variant="outline-danger"
-                            className="delete-btn"
-                            onClick={e => handleDelete(props.person.id)}>
-                            X
-                        </Button>{' '}
-
-                    
-                    </ListGroup.Item>
-               
-        
-       
-    )
 }
 
 export default Person;

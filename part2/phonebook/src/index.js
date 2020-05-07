@@ -70,13 +70,17 @@ const App = () => {
       
       <PersonForm addPerson={addPerson} 
         newName = {newName} setNewName={setNewName}
-        newPhoneNumber={newPhoneNumber} setNewPhoneNumber={setNewPhoneNumber}
+        newPhoneNumber={newPhoneNumber} 
+        setNewPhoneNumber={setNewPhoneNumber}
         changeFilter = {changeFilter}>
       </PersonForm>
       <br></br>
       <h2 className="contacts">Numbers</h2>
       
-      <Persons personsToShow={persons}></Persons>
+      <Persons 
+        persons={persons}
+        setPersons={setPersons}>
+      </Persons>
     </div>
 
   )

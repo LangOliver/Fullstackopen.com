@@ -14,46 +14,6 @@
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
-      "id": 5,
-      "name": "asd",
-      "number": "asd"
-    },
-    {
-      "id": 6,
-      "name": "asd",
-      "number": "asd"
-    },
-    {
-      "id": 8,
-      "name": "oliver",
-      "number": "lang"
-    },
-    {
-      "id": 9,
-      "name": "asd",
-      "number": "asd"
-    },
-    {
-      "id": 10,
-      "name": "asd",
-      "number": "asd"
-    },
-    {
-      "id": 11,
-      "name": "asd",
-      "number": "asd"
-    },
-    {
-      "id": 12,
-      "name": "asd",
-      "number": "asd"
     }
   ]
 }
