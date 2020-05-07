@@ -22,8 +22,7 @@ class Person extends React.Component {
         return (
             <ListGroup.Item 
                 key={this.props.person.id}>
-                {this.props.person.name} 
-                {this.props.person.number} 
+                {this.props.person.name} {this.props.person.number} 
                 <Button 
                     variant="outline-danger"
                     className="delete-btn"

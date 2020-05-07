@@ -35,7 +35,34 @@ const App = () => {
       name: newName,
       number: newPhoneNumber
     }
-    PhonebookDataService
+    /* Check if there is already a person with that name
+    */
+    const existingPersons = persons.filter
+      (person =>  
+      person.name === newPerson.name) 
+    console.log('Existing person: ', existingPersons.length)
+
+    if (existingPersons.length === 1) {
+      /* Found exactly one existing Contact with the same name, 
+      lets update the number
+      */
+      PhonebookDataService
+      .update(existingPersons[0].id, newPerson)
+      .then(response => {
+        // Update the new number in the array
+        persons[response.id-1] = response
+        setPersons(persons)
+        setNewName("") 
+        setNewPhoneNumber("") 
+        }
+      ).catch(error =>  {
+        console.log("error posting", error)
+      }) 
+    }
+    /* Add the new person if the name doesn't exist yet
+    */
+    else {
+      PhonebookDataService
       .create(newPerson)
       .then(response => {
         setPersons(persons.concat(response))
@@ -45,6 +72,8 @@ const App = () => {
       ).catch(error =>  {
         console.log("error posting", error)
       }) 
+    }
+   
 
   }
     /* Reload the Persons from the database, 
