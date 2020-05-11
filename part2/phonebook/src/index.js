@@ -2,18 +2,24 @@ import ReactDOM from 'react-dom';
 import React, { useState, useEffect } from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-import ListGroup from 'react-bootstrap/ListGroup'
 import PhonebookDataService from './services/PhonebookDataService'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ChangeNumberModal from './components/ChangeNumberModal'
+import Modal from "react-bootstrap/Modal"
+import Button from "react-bootstrap/Button"
 
 const App = () => {
   const [ persons, setPersons] = useState([])
   const [ newName, setNewName ] = useState('')
-  const [ newPhoneNumber, setNewPhoneNumber] = useState('')  
+  const [ newPhoneNumber, setNewPhoneNumber] = useState('') 
+  const [ show, setShow] = useState(false)
+  const [ existingPersonId, setExistingPersonId] = useState(null)
+  const [ newPerson, setNewPerson] = useState(null)
+
+  
+
   // In the beginning, show all all persons
-  
-  
    useEffect(() => {
     PhonebookDataService.getAll()
       .then(response => {
@@ -21,6 +27,37 @@ const App = () => {
         setPersons(response)
       })
   }, [])
+
+  
+  const handleChangeNumberModalOK = () =>  {
+    PhonebookDataService
+        .update(existingPersonId, newPerson)
+        .then(response => {
+          // Update the new number in the array
+          persons[response.id-1] = response
+          clearAddPersonState()
+          }
+        ).catch(error =>  {
+        }) 
+      
+    closeConfirmChangeModal()
+  
+  }
+  
+  const clearAddPersonState = () => {
+    setPersons(persons)
+    setNewName("") 
+    setNewPhoneNumber("") 
+    setNewPerson(null)
+    setExistingPersonId(null)
+  }
+  
+    const closeConfirmChangeModal = () => {
+      setShow(false)}
+  
+    const showConfirmChangeModal = () => {
+      setShow(true)
+    }
 
   /* handles the form change of adding a Person by,
   creating a new contact object, implicitly creating a new array with
@@ -35,29 +72,25 @@ const App = () => {
       name: newName,
       number: newPhoneNumber
     }
+
+    
     /* Check if there is already a person with that name
     */
     const existingPersons = persons.filter
       (person =>  
       person.name === newPerson.name) 
-    console.log('Existing person: ', existingPersons.length)
 
     if (existingPersons.length === 1) {
       /* Found exactly one existing Contact with the same name, 
       lets update the number
       */
-      PhonebookDataService
-      .update(existingPersons[0].id, newPerson)
-      .then(response => {
-        // Update the new number in the array
-        persons[response.id-1] = response
-        setPersons(persons)
-        setNewName("") 
-        setNewPhoneNumber("") 
-        }
-      ).catch(error =>  {
-        console.log("error posting", error)
-      }) 
+     setExistingPersonId(existingPersons[0].id)
+     setNewPerson(newPerson)
+     showConfirmChangeModal()
+    }
+    else if (existingPersons.length > 1) {
+      console.log(`Oops, more than one person with same name, can't do anything`)
+      clearAddPersonState()
     }
     /* Add the new person if the name doesn't exist yet
     */
@@ -103,6 +136,7 @@ const App = () => {
         setNewPhoneNumber={setNewPhoneNumber}
         changeFilter = {changeFilter}>
       </PersonForm>
+      
       <br></br>
       <h2 className="contacts">Numbers</h2>
       
@@ -110,6 +144,10 @@ const App = () => {
         persons={persons}
         setPersons={setPersons}>
       </Persons>
+      <ChangeNumberModal show = {show} 
+        handleChangeNumberModalOK={handleChangeNumberModalOK}
+        closeConfirmChangeModal={closeConfirmChangeModal}
+      />
     </div>
 
   )

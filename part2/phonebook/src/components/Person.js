@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import PhoneBookDataService from './../services/PhonebookDataService';
+import ChangeNumberModal from './ChangeNumberModal';
 
 class Person extends React.Component {
     
     constructor(props) {
         super(props);
+       
     }
-      
+
     handleDelete(id, persons, setPersons) {
         PhoneBookDataService.deleteIt(id)
         .then(response => {
@@ -20,8 +22,7 @@ class Person extends React.Component {
     
     render () {
         return (
-            <ListGroup.Item 
-                key={this.props.person.id}>
+            <ListGroup.Item>
                 {this.props.person.name} {this.props.person.number} 
                 <Button 
                     variant="outline-danger"
