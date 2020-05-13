@@ -37,8 +37,14 @@ const App = () => {
           persons[response.id-1] = response
           clearAddPersonState()
           }
-        ).catch(error =>  {
-        }) 
+        ).catch(error => {
+          setStatusMessage({type:'error', message:
+                `Person '${newPerson.name}' was already removed from the server`}
+              )
+          setTimeout(() => {
+            setStatusMessage(null)
+          }, 5000)}
+         )
     closeConfirmChangeModal()  
   }
   
@@ -110,19 +116,9 @@ const App = () => {
         setTimeout(() => {
           setStatusMessage(null)
         }, 5000)
-        }
-      ).catch(error =>  {
-        setStatusMessage({type:'error', message:
-          `Person '${newPerson.name}' couldn't be added to the server`}
-        )
-        setTimeout(() => {
-          setStatusMessage(null)
-        }, 5000)      }
-        )
+        })
          
     }
-   
-
   }
     /* Reload the Persons from the database, 
     and apply filter only when the string is not an null/empty string,
@@ -138,7 +134,8 @@ const App = () => {
       person.name.includes(currentFilter)
     ))
    })
-    
+   
+  
   }
 
   return (

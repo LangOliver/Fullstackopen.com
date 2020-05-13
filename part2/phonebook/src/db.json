@@ -11,11 +11,6 @@
       "number": "123"
     },
     {
-      "id": 3,
-      "name": "Dan Abramov",
-      "number": "3"
-    },
-    {
       "id": 4,
       "name": "Arto Hellas",
       "number": "123"
@@ -26,19 +21,9 @@
       "number": "123123123"
     },
     {
-      "id": 6,
-      "name": "as",
-      "number": "4"
-    },
-    {
       "id": 7,
       "name": "Ada Lovelace2",
       "number": ""
-    },
-    {
-      "id": 8,
-      "name": "asd",
-      "number": "123"
     },
     {
       "id": 9,
