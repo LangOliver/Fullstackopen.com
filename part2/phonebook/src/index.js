@@ -6,8 +6,7 @@ import PhonebookDataService from './services/PhonebookDataService'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ChangeNumberModal from './components/ChangeNumberModal'
-import Modal from "react-bootstrap/Modal"
-import Button from "react-bootstrap/Button"
+import Notification from './components/Notification'
 
 const App = () => {
   const [ persons, setPersons] = useState([])
@@ -16,6 +15,7 @@ const App = () => {
   const [ show, setShow] = useState(false)
   const [ existingPersonId, setExistingPersonId] = useState(null)
   const [ newPerson, setNewPerson] = useState(null)
+  const [ statusMessage, setStatusMessage] = useState(null)
 
   
 
@@ -39,9 +39,7 @@ const App = () => {
           }
         ).catch(error =>  {
         }) 
-      
-    closeConfirmChangeModal()
-  
+    closeConfirmChangeModal()  
   }
   
   const clearAddPersonState = () => {
@@ -89,7 +87,11 @@ const App = () => {
      showConfirmChangeModal()
     }
     else if (existingPersons.length > 1) {
-      console.log(`Oops, more than one person with same name, can't do anything`)
+      setStatusMessage({type: 'error', message: 
+        `Oops, more than one person with same name, can't do anything`})
+      setTimeout(() => {
+        setStatusMessage(null)
+      }, 5000)
       clearAddPersonState()
     }
     /* Add the new person if the name doesn't exist yet
@@ -101,10 +103,23 @@ const App = () => {
         setPersons(persons.concat(response))
         setNewName("") 
         setNewPhoneNumber("") 
+
+        setStatusMessage({type: 'success', message:
+          `Person '${newPerson.name}' was added to the server`}
+        )
+        setTimeout(() => {
+          setStatusMessage(null)
+        }, 5000)
         }
       ).catch(error =>  {
-        console.log("error posting", error)
-      }) 
+        setStatusMessage({type:'error', message:
+          `Person '${newPerson.name}' couldn't be added to the server`}
+        )
+        setTimeout(() => {
+          setStatusMessage(null)
+        }, 5000)      }
+        )
+         
     }
    
 
@@ -129,17 +144,17 @@ const App = () => {
   return (
     <div>
       <h2 className="app-title">Phonebook</h2>
-      
+      <Notification 
+      message = {statusMessage} />
       <PersonForm addPerson={addPerson} 
         newName = {newName} setNewName={setNewName}
         newPhoneNumber={newPhoneNumber} 
         setNewPhoneNumber={setNewPhoneNumber}
         changeFilter = {changeFilter}>
       </PersonForm>
-      
       <br></br>
       <h2 className="contacts">Numbers</h2>
-      
+    
       <Persons 
         persons={persons}
         setPersons={setPersons}>
