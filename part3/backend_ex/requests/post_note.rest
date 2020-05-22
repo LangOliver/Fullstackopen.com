@@ -1,0 +1,7 @@
+POST http://127.0.0.1:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "Browser can execute only Javascript",
+    "important": false
+}
