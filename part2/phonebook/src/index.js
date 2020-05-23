@@ -23,7 +23,7 @@ const App = () => {
    useEffect(() => {
     PhonebookDataService.getAll()
       .then(response => {
-        console.log("effect response is", response)
+        console.log("getAll response is", response)
         setPersons(response)
       })
   }, [])
@@ -34,12 +34,22 @@ const App = () => {
         .update(existingPersonId, newPerson)
         .then(response => {
           // Update the new number in the array
-          persons[response.id-1] = response
-          clearAddPersonState()
+          let tempPersons = [...persons]
+          tempPersons = tempPersons.map(person => {
+            if (person.id === response.id) {
+              return response
+            } 
+            else {
+              return person
+            }
+            
+          })
+          setPersons(tempPersons)
+
           }
         ).catch(error => {
           setStatusMessage({type:'error', message:
-                `Person '${newPerson.name}' was already removed from the server`}
+                `Person '${newPerson.name}' was already removed from the server realMessage:' ${error}`}
               )
           setTimeout(() => {
             setStatusMessage(null)
@@ -57,6 +67,7 @@ const App = () => {
   }
   
     const closeConfirmChangeModal = () => {
+      clearAddPersonState()
       setShow(false)}
   
     const showConfirmChangeModal = () => {
@@ -77,7 +88,7 @@ const App = () => {
       number: newPhoneNumber
     }
 
-    
+
     /* Check if there is already a person with that name
     */
     const existingPersons = persons.filter
@@ -109,7 +120,6 @@ const App = () => {
         setPersons(persons.concat(response))
         setNewName("") 
         setNewPhoneNumber("") 
-
         setStatusMessage({type: 'success', message:
           `Person '${newPerson.name}' was added to the server`}
         )
