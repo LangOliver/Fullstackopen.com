@@ -120,12 +120,22 @@ const App = () => {
         setPersons(persons.concat(response))
         setNewName("") 
         setNewPhoneNumber("") 
-        setStatusMessage({type: 'success', message:
+        setStatusMessage({type: 'success',
+         message:
           `Person '${newPerson.name}' was added to the server`}
         )
         setTimeout(() => {
           setStatusMessage(null)
         }, 5000)
+        })
+        .catch(error => {
+          console.log("Error happend ohoh: ", error.response.data)
+          setStatusMessage({type: 'error',
+           message: `Person validation failed: '${error.response.data.error}'`})
+           setTimeout(() => {
+            setStatusMessage(null)
+          }, 5000)
+           clearAddPersonState()
         })
          
     }
