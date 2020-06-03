@@ -1,0 +1,9 @@
+POST http://127.0.0.1:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Gusti Knusti",
+    "author": "123123123",
+    "url": "http://localhost.ch",
+    "likes": 3
+}
