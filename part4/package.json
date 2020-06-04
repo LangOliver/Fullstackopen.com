@@ -1,0 +1,22 @@
+{
+  "name": "part4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^26.0.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest --verbose"
+
+  },
+  "author": "",
+  "license": "ISC",
+  "jest" : {
+    "testEnvironment": "node"
+  }
+
+}
