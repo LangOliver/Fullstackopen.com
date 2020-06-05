@@ -26,14 +26,37 @@ test('all blogs are returned', async () => {
     const response = await api.get('/api/blogs')
     expect(response.body.length).toBe(helper.initialBlogs.length)
   })
-
-test('blogs _id is exchanged to id', async () => {
+  
+describe('blog parameter ', () => {
+  test('_id is exchanged to id', async () => {
     const response = await api.get('/api/blogs')
     response.body.map(
       blog => expect(blog.id).toBeDefined())
     response.body.map(
         blog => expect(blog._id).toBeUndefined())
 
+})
+
+  test('likes is set to 0 when not specified while posting a new blog', async () => {
+    const newBlog = {
+      title: 'Bergblog2',
+      author: 'Günther Messner',
+      url: 'www.nangaparbat.com'
+    }
+    const response = await api.post('/api/blogs')
+    .send(newBlog)
+
+    expect(response.body.likes).toBe(0)
+  
+    
+      //   const response = await api.get('/api/blogs')
+    //   response.body.map(
+    //     blog => expect(blog.id).toBeDefined())
+    //   response.body.map(
+    //       blog => expect(blog._id).toBeUndefined())
+
+    // })
+  })
 })
 
 test('blog is added to the database', async () => {
@@ -51,6 +74,7 @@ test('blog is added to the database', async () => {
   const blogsAtEnd = await helper.blogsInDb()
   expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
 })
+
 
 afterAll(() => {
   console.log('closing db connection')
