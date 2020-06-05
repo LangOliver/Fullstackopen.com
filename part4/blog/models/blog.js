@@ -1,10 +1,4 @@
 const mongoose = require('mongoose')
-const config = require('../utils/config')
-
-// const mongoUrl = 'mongodb://localhost/bloglist'
-const mongoUrl = config.MONGODB_URI
-
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const blogSchema = mongoose.Schema({
   title: {
@@ -19,7 +13,11 @@ const blogSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  likes: Number
+  likes: Number,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 blogSchema.set('toJSON', {
