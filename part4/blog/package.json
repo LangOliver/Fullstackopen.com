@@ -4,10 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cross-env": "^7.0.2"
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.17"
   },
   "devDependencies": {
-    "jest": "^26.0.1"
+    "jest": "^26.0.1",
+    "supertest": "^4.0.2"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
