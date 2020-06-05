@@ -36,6 +36,22 @@ test('blogs _id is exchanged to id', async () => {
 
 })
 
+test('blog is added to the database', async () => {
+  const newBlog = {
+    title: 'Bergblog2',
+    author: 'Günther Messner',
+    url: 'www.nangaparbat.com',
+    likes: 12
+  }
+  await api.post('/api/blogs')
+  .send(newBlog)
+  .expect(201)
+  .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+})
+
 afterAll(() => {
   console.log('closing db connection')
   mongoose.connection.close()
