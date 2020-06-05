@@ -4,7 +4,7 @@ const initialBlogs = [
   {
     title: 'Bergblog',
     author: 'Reinhold Messner',
-    url: 'www.nangapartbat.com',
+    url: 'www.nangaparbat.com',
     likes: 1
   },
   {
