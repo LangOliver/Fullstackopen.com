@@ -48,14 +48,31 @@ describe('blog parameter ', () => {
 
     expect(response.body.likes).toBe(0)
   
-    
-      //   const response = await api.get('/api/blogs')
-    //   response.body.map(
-    //     blog => expect(blog.id).toBeDefined())
-    //   response.body.map(
-    //       blog => expect(blog._id).toBeUndefined())
+  })
+  test('title is missing results in a 400 Bad Request', async () => {
+    const newBlog = {
+      author: 'Günther Messner',
+      url: 'www.nangaparbat.com',
+      likes: 1
+    }
+    const response = await api.post('/api/blogs')
+    .send(newBlog)
 
-    // })
+    console.log('status', response.status)
+    expect(response.status).toBe(400)
+  
+  })
+  test('url is missing results in a 400 Bad Request', async () => {
+    const newBlog = {
+      author: 'Günther Messner',
+      title: 'sometitle',
+      likes: 1
+    }
+    const response = await api.post('/api/blogs')
+    .send(newBlog)
+    console.log('status', response.status)
+    expect(response.status).toBe(400)
+  
   })
 })
 

@@ -7,9 +7,18 @@ const mongoUrl = config.MONGODB_URI
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const blogSchema = mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
+  title: {
+    type: String,
+    required: true
+  },
+  author: {
+    type:String,
+    required: false
+  },
+  url: {
+    type: String,
+    required: true
+  },
   likes: Number
 })
 
