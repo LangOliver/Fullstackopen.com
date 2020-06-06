@@ -48,6 +48,19 @@ blogsRouter.get('/', async (request, response) => {
       })
 
     blogsRouter.delete('/:id', async (request, response, next) => {
+      const token = request.token
+      const decodedToken = jwt.verify(token, process.env.SECRET)
+      if (!token || !decodedToken.id) {
+        return response.status(401).json({ error: 'token missing or invalid' })
+      }
+
+    const loggedInUser = await User.findById(decodedToken.id)
+    const blogFound = await Blog.findById(request.params.id)
+
+    console.log('Login user is:',loggedInUser.id,
+      'blog creator user is:', blogFound.user)
+
+    if (blogFound.user.toString() === loggedInUser.id.toString()) {
       try {
         await Blog.findByIdAndRemove(request.params.id)
         response.status(204).end()
@@ -55,6 +68,11 @@ blogsRouter.get('/', async (request, response) => {
       catch(exception) {
         next(exception)
       }
+    }
+    else {
+      return response.status(403).json({ error: 'deletion is permitted only by the owner of the blog'})
+    }
+     
     })
 
   module.exports = blogsRouter
