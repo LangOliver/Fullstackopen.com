@@ -22,7 +22,9 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
-    "test-blog": "cross-env NODE_ENV=test jest tests/blog.test.js --verbose --runInBand --detectOpenHandles"
+    "test-blog": "cross-env NODE_ENV=test jest tests/blog.test.js --verbose --runInBand --detectOpenHandles",
+    "test-user": "cross-env NODE_ENV=test jest tests/user.test.js --verbose --runInBand --detectOpenHandles"
+
   },
   "author": "",
   "license": "ISC",
