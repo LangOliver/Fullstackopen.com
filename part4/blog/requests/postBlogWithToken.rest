@@ -1,0 +1,11 @@
+POST http://127.0.0.1:3001/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjVlZGI1M2Q2ODgxYjU2MDVlMDgwNDk2ZCIsImlhdCI6MTU5MTQzMzMwNX0.7GAd_uQlACO_idQQSwfNWt3Enl5SSJ6ee4ThocAvJpo
+
+{
+    "title": "Gusti Knusti",
+    "author": "123123123",
+    "url": "http://localhost.ch",
+    "likes": 3
+    }
+
