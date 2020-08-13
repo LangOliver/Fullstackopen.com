@@ -3,15 +3,39 @@ const mongoose = require('mongoose')
 const helper = require('./blogTest_helper')
 const app = require('../app')
 const api = supertest(app)
+const jwt = require('jsonwebtoken')
 
 const Blog = require('../models/blog')
+const User = require('../models/user')
+let token
 
 beforeEach(async () => {
+  //Remove users and populate with initialValues
+  await User.deleteMany({})
+  const userObjects = helper.initialUsers.map(user => new User(user))
+  const userPromiseArray = userObjects.map(user => user.save())
+  await Promise.all(userPromiseArray)
+
+  // Remove all Blogs and populate it anew with initialValues
   await Blog.deleteMany({})
-  const blogObjects = helper.initialUsers
-    .map(blog => new Blog(blog))
+  const blogObjects = helper.initialBlogs.map(blog => new Blog(blog))
   const promiseArray = blogObjects.map(blog => blog.save())
   await Promise.all(promiseArray)
+
+
+  const getUsers = await api
+  .get('/api/users')
+  console.log('Response body', getUsers.body)
+  console.log('Users', getUsers.body[0])
+  console.log('Users one: ', getUsers.body[0].username)
+  const userForToken = {
+    username: getUsers.body[0].username,
+    id: getUsers.body[0]._id,
+  }
+
+  token = jwt.sign(userForToken, process.env.SECRET)
+  console.log('Token is', token)
+
 })
 
 test('blogs are returned as json', async () => {
@@ -24,7 +48,7 @@ test('blogs are returned as json', async () => {
 
 test('all blogs are returned', async () => {
     const response = await api.get('/api/blogs')
-    expect(response.body.length).toBe(helper.initialUsers.length)
+    expect(response.body.length).toBe(helper.initialBlogs.length)
   })
   
 describe('blog parameter ', () => {
@@ -44,8 +68,11 @@ describe('blog parameter ', () => {
       url: 'www.nangaparbat.com'
     }
     const response = await api.post('/api/blogs')
+    .set('Authorization', 'bearer ' + token)
     .send(newBlog)
+  
 
+    console.log('response', response)
     expect(response.body.likes).toBe(0)
   
   })
@@ -55,9 +82,10 @@ describe('blog parameter ', () => {
       url: 'www.nangaparbat.com',
       likes: 1
     }
+    console.log('token in test title', token)
     const response = await api.post('/api/blogs')
+    .set('Authorization', token)
     .send(newBlog)
-
     console.log('status', response.status)
     expect(response.status).toBe(400)
   

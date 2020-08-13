@@ -16,12 +16,12 @@ blogsRouter.get('/', async (request, response) => {
     let blog = new Blog(request.body)
     const token = request.token
     const decodedToken = jwt.verify(token, process.env.SECRET)
+    console.log('token is, ', token)
     if (!token || !decodedToken.id) {
-      return response.status(401).json({ error: 'token missing or invalid' })
+      return response.status(401).json({ error: 'token missing or invalid'+  decodedToken.id })
     }
     const user = await User.findById(decodedToken.id)
     blog.user = user._id
-
     try {
       const savedBlog = await blog.save()
       user.blogs = user.blogs.concat(savedBlog._id)
