@@ -88,7 +88,7 @@ const App = () => {
     </Togglable>
   )
     
-    const blogForm = ()=> (
+    const blogForm = () => (
       <Togglable buttonLabel ="new blog" ref={blogFormRef}>
         <BlogForm createBlog={addBlog}/>
       </Togglable>     
