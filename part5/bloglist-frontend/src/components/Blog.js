@@ -1,4 +1,4 @@
-import React,{ useState} from 'react'
+import React,{ useState } from 'react'
 
 const Blog = ({ blog }) => {
   const [showDetails, setShowDetails] = useState(false)
@@ -7,7 +7,9 @@ const Blog = ({ blog }) => {
     console.log('ToggleDetails')
     setShowDetails(!showDetails)
   }
+  const like = () => {
 
+  }
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -15,11 +17,11 @@ const Blog = ({ blog }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  
+
   const blogDetails = () => (
     <div>
       {blog.url}<br></br>
-      {blog.likes}<button type="submit">like</button><br></br>
+      {blog.likes}<button type="submit" onClick={like}>like</button><br></br>
       {blog.author}
     </div>
   )
@@ -27,9 +29,9 @@ const Blog = ({ blog }) => {
   return (
     <div style ={blogStyle}>
       {blog.title}<button onClick={toggleDetails}>view</button>
-       <br></br>
+      <br></br>
       {showDetails ?
-      blogDetails() : ''}
+        blogDetails() : ''}
 
     </div>
   )}

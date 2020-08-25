@@ -10,24 +10,24 @@ import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null)
-  
+
   const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      console.log("user found: ", user)
+      console.log('user found: ', user)
 
       setUser(user)
       blogService.setToken(user.token)
@@ -37,21 +37,21 @@ const App = () => {
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
 
-  try {
-    blogService
-    .create(blogObject)
-    .then(returnedBlog => {
-      setBlogs(blogs.concat(returnedBlog))
-    })
-  }
+    try {
+      blogService
+        .create(blogObject)
+        .then(returnedBlog => {
+          setBlogs(blogs.concat(returnedBlog))
+        })
+    }
 
-  catch(exception) {
-    setErrorMessage('Could not add blog')
+    catch(exception) {
+      setErrorMessage('Could not add blog')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
+    }
   }
-}
 
 
   const handleLogin = async (event) => {
@@ -62,7 +62,7 @@ const App = () => {
       })
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
-      ) 
+      )
       blogService.setToken(user.token)
 
       setUser(user)
@@ -87,28 +87,31 @@ const App = () => {
       />
     </Togglable>
   )
-    
-    const blogForm = () => (
-      <Togglable buttonLabel ="new blog" ref={blogFormRef}>
-        <BlogForm createBlog={addBlog}/>
-      </Togglable>     
-    )
+
+  const blogForm = () => (
+    <Togglable buttonLabel ="new blog" ref={blogFormRef}>
+      <BlogForm createBlog={addBlog}/>
+      <Togglable>forgote label</Togglable>
+
+    </Togglable>
+
+  )
   return (
-    
+
     <div>
-        <Notification message={errorMessage} />
-        {user === null ?
-      loginForm() :
-      <div>
-        <p>{user.name} logged-in</p>
-        {blogForm()}
-      </div>
-    }
-        <h2>blogs</h2>
+      <Notification message={errorMessage} />
+      {user === null ?
+        loginForm() :
+        <div>
+          <p>{user.name} logged-in</p>
+          {blogForm()}
+        </div>
+      }
+      <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
-      
+
     </div>
   )
 }
