@@ -2,6 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, fireEvent } from '@testing-library/react'
 import Blog from './Blog'
+import BlogForm from './BlogForm'
 
 test('renders blog basic content', () => {
   const blog = {
@@ -82,4 +83,29 @@ test('when the like button is clicked twice, the event handler the component rec
   fireEvent.click(likeButton)
   expect(updateBlog.mock.calls).toHaveLength(2)
   component.debug()
+})
+
+test('blog form calls the event handler it receives as props', () => {
+  const blog = {
+    title: 'Most awesome post ever',
+    author:'Oliver Lang',
+    likes: 12,
+    url: 'http://www.ich.ch'
+  }
+
+  const createBlog = () => {
+
+  }
+
+  const component = render(
+    <BlogForm createBlog={createBlog}/>)
+  component.debug()
+  const form = component.container.querySelector('form')
+  fireEvent.submit(form)
+
+  const author = component.container.querySelector('#author')
+  const title = component.container.querySelector('#title')
+  expect(author.onChange).toBeDefined
+  expect(title.onChange).toBeDefined
+
 })
