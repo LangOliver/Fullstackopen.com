@@ -54,13 +54,13 @@ const App = () => {
     }
   }
 
-  const updateBlog = (blogObject) => {
+  const updateBlog = (ref, blogObject) => {
     console.log('Try to update blog object: ', blogObject)
     try {
       blogService
         .update(blogObject.id, blogObject)
         .then(returnedBlog => {
-          blogRef.current.setBlog(returnedBlog)
+          ref.current.setBlog(returnedBlog)
         })
     }
 

@@ -20,8 +20,10 @@ const Blog = React.forwardRef((props, ref) => {
     console.log('like called')
     currentBlog.likes = currentBlog.likes + 1
     console.log('Likes', currentBlog.likes)
-    props.updateBlog(currentBlog)
+    props.updateBlog(ref, currentBlog)
+
   }
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
