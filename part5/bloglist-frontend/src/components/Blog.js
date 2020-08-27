@@ -1,14 +1,26 @@
-import React,{ useState } from 'react'
+import React,{ useState, useImperativeHandle } from 'react'
 
-const Blog = ({ blog }) => {
+const Blog = React.forwardRef((props, ref) => {
+
   const [showDetails, setShowDetails] = useState(false)
+  const [currentBlog, setBlog] = useState(props.blog)
 
   const toggleDetails = () => {
     console.log('ToggleDetails')
     setShowDetails(!showDetails)
   }
-  const like = () => {
 
+  useImperativeHandle(ref, () => {
+    return {
+      setBlog
+    }
+  })
+
+  const like = () => {
+    console.log('like called')
+    currentBlog.likes = currentBlog.likes + 1
+    console.log('Likes', currentBlog.likes)
+    props.updateBlog(currentBlog)
   }
   const blogStyle = {
     paddingTop: 10,
@@ -19,21 +31,23 @@ const Blog = ({ blog }) => {
   }
 
   const blogDetails = () => (
+
     <div className='blogDetails'>
-      {blog.url}<br></br>
-      {blog.likes}<button type="submit" onClick={like}>like</button><br></br>
-      {blog.author}
+      {currentBlog.url}<br></br>
+      {currentBlog.likes}<button type="submit" onClick={like}>like</button><br></br>
+      {currentBlog.author}
     </div>
   )
 
   return (
     <div style ={blogStyle} className='blog'>
-      {blog.title} by {blog.author}<button onClick={toggleDetails}>view</button>
+      {currentBlog.title} by {currentBlog.author}<button onClick={toggleDetails}>view</button>
       <br></br>
       {showDetails ?
         blogDetails() : ''}
 
     </div>
-  )}
+  )
+})
 
 export default Blog

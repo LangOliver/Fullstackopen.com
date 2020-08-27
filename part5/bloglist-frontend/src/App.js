@@ -16,6 +16,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   const blogFormRef = useRef()
+  const blogRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -52,6 +53,25 @@ const App = () => {
       }, 5000)
     }
   }
+
+  const updateBlog = (blogObject) => {
+    console.log('Try to update blog object: ', blogObject)
+    try {
+      blogService
+        .update(blogObject.id, blogObject)
+        .then(returnedBlog => {
+          blogRef.current.setBlog(returnedBlog)
+        })
+    }
+
+    catch(exception) {
+      setErrorMessage('Could not update blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
 
 
   const handleLogin = async (event) => {
@@ -109,7 +129,10 @@ const App = () => {
       }
       <h2>blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id}
+          blog={blog}
+          updateBlog={updateBlog}
+          ref={blogRef} />
       )}
 
     </div>

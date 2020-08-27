@@ -60,3 +60,27 @@ test('renders the blog\s url and likes when the show button is clicked', () => {
 
 
 })
+
+test('when the like button is clicked twice, the likes increase by 2', () => {
+  const blog = {
+    title: 'Most awesome post ever',
+    author:'Oliver Lang',
+    likes: 12,
+    url: 'http://www.ich.ch'
+  }
+
+  const component = render(
+    <Blog blog={blog} />)
+
+  const button = component.getByText('view')
+  fireEvent.click(button)
+
+  const likeButton = component.getByText('like')
+  fireEvent.click(button)
+
+
+  component.debug()
+
+
+
+})
