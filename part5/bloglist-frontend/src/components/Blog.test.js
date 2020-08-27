@@ -61,7 +61,7 @@ test('renders the blog\s url and likes when the show button is clicked', () => {
 
 })
 
-test('when the like button is clicked twice, the likes increase by 2', () => {
+test('when the like button is clicked twice, the event handler the component received as props is called twice.', () => {
   const blog = {
     title: 'Most awesome post ever',
     author:'Oliver Lang',
@@ -69,18 +69,17 @@ test('when the like button is clicked twice, the likes increase by 2', () => {
     url: 'http://www.ich.ch'
   }
 
+  const updateBlog = jest.fn()
+
   const component = render(
-    <Blog blog={blog} />)
+    <Blog blog={blog} updateBlog={updateBlog} />)
 
   const button = component.getByText('view')
   fireEvent.click(button)
 
   const likeButton = component.getByText('like')
-  fireEvent.click(button)
-
-
+  fireEvent.click(likeButton)
+  fireEvent.click(likeButton)
+  expect(updateBlog.mock.calls).toHaveLength(2)
   component.debug()
-
-
-
 })
