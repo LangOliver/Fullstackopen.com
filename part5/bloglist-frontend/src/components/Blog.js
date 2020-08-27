@@ -19,7 +19,7 @@ const Blog = ({ blog }) => {
   }
 
   const blogDetails = () => (
-    <div>
+    <div className='blogDetails'>
       {blog.url}<br></br>
       {blog.likes}<button type="submit" onClick={like}>like</button><br></br>
       {blog.author}
@@ -27,8 +27,8 @@ const Blog = ({ blog }) => {
   )
 
   return (
-    <div style ={blogStyle}>
-      {blog.title}<button onClick={toggleDetails}>view</button>
+    <div style ={blogStyle} className='blog'>
+      {blog.title} by {blog.author}<button onClick={toggleDetails}>view</button>
       <br></br>
       {showDetails ?
         blogDetails() : ''}
