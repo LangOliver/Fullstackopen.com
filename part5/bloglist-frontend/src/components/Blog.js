@@ -36,7 +36,7 @@ const Blog = React.forwardRef((props, ref) => {
 
     <div className='blogDetails'>
       {currentBlog.url}<br></br>
-      {currentBlog.likes}<button type="submit" onClick={like}>like</button><br></br>
+      {currentBlog.likes}<button id='like-button' type="submit" onClick={like}>like</button><br></br>
       {currentBlog.author}
     </div>
   )
