@@ -21,6 +21,10 @@ const Blog = React.forwardRef((props, ref) => {
     currentBlog.likes = currentBlog.likes + 1
     console.log('Likes', currentBlog.likes)
     props.updateBlog(ref, currentBlog)
+  }
+
+  const deletePost = () => {
+    props.deleteBlog(ref, currentBlog)
 
   }
 
@@ -37,7 +41,7 @@ const Blog = React.forwardRef((props, ref) => {
     <div className='blogDetails'>
       {currentBlog.url}<br></br>
       {currentBlog.likes}<button id='like-button' type="submit" onClick={like}>like</button><br></br>
-      {currentBlog.author}
+      {currentBlog.author}<br></br><button id='delete-button' type="submit" onClick={deletePost}>delete</button>
     </div>
   )
 

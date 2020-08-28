@@ -64,6 +64,7 @@ const App = () => {
         })
     }
 
+
     catch(exception) {
       setErrorMessage('Could not update blog')
       setTimeout(() => {
@@ -71,6 +72,26 @@ const App = () => {
       }, 5000)
     }
   }
+
+  const deleteBlog = (ref, blogObject) => {
+    try {
+      blogService
+        .deletePost(blogObject.id)
+        .then(response => {
+          setBlogs(blogs.filter(item => item !== blogObject))
+        })
+    }
+
+
+    catch(exception) {
+      setErrorMessage('Could not update blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+
 
 
 
@@ -132,6 +153,7 @@ const App = () => {
         <Blog key={blog.id}
           blog={blog}
           updateBlog={updateBlog}
+          deleteBlog={deleteBlog}
           ref={blogRef} />
       )}
 
