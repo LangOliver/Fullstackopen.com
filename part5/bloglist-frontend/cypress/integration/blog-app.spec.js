@@ -50,8 +50,13 @@ describe('Blog app', function() {
         password: 'salainen'
       }
       cy.request('POST', 'http://localhost:3001/api/users/', user)
-
       cy.login({ username: 'mluukkai', password: 'salainen' })
+      cy.createBlog({
+        author: 'Blogeur',
+        title: 'Tre bien blog',
+        url: 'www.blog.blog',
+        likes: 0
+      })
     })
     it('A blog can be created', function() {
       cy.contains('new blog').click()
@@ -75,6 +80,12 @@ describe('Blog app', function() {
       cy.get('.blogDetails').find('#like-button').as('newBlogPost-like-button')
       cy.get('@newBlogPost-like-button').click()
       cy.get('.blog').contains('1')
+
+    })
+    it('A user can delete his blog', function() {
+      cy.get('.blog').contains('view').click()
+      cy.get('#delete-button').click()
+      cy.get('.blog').should('not.exist')
 
     })
   })
