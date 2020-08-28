@@ -38,7 +38,7 @@ test('renders only the blog\'s basic content', () => {
 
 })
 
-test('renders the blog\s url and likes when the show button is clicked', () => {
+test('renders the blog\'s url and likes when the show button is clicked', () => {
   const blog = {
     title: 'Most awesome post ever',
     author:'Oliver Lang',

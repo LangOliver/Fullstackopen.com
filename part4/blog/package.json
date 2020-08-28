@@ -24,7 +24,8 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
     "test-blog": "cross-env NODE_ENV=test jest tests/blog.test.js --verbose --runInBand --detectOpenHandles",
     "test-blog-add": "cross-env NODE_ENV=test jest  --verbose --runInBand --detectOpenHandles -- \"likes is set to 0 when not specified while posting a new blog\" ",
-    "test-user": "cross-env NODE_ENV=test jest tests/user.test.js --verbose --runInBand --detectOpenHandles"
+    "test-user": "cross-env NODE_ENV=test jest tests/user.test.js --verbose --runInBand --detectOpenHandles",
+    "start:test": "cross-env NODE_ENV=test node index.js"
 
   },
   "author": "",

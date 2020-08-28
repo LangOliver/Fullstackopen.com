@@ -1,0 +1,6 @@
+POST http://127.0.0.1:3001/api/testing/reset
+Content-Type: application/json
+
+{
+  
+}
