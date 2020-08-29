@@ -18,13 +18,12 @@ const asObject = (anecdote) => {
   }
 }
 
-
-
 const initialState = anecdotesAtStart.map(asObject)
-
 const reducer = (state = initialState, action) => {
+
   console.log('state now: ', state)
   console.log('action', action)
+
   switch(action.type) {
     case 'VOTE_INCREMENT':
       const id = action.data.id
@@ -42,6 +41,14 @@ const reducer = (state = initialState, action) => {
         votes: 0 
       }
       return state.concat(newAnecdote)
+    case 'SORT_ANECDOTES_ASC':
+      return state.slice().sort(function(a, b) {
+        return a.votes - b.votes;
+     })
+    case 'SORT_ANECDOTES_DSC':
+      return state.slice().sort(function(a, b) {
+        return b.votes - a.votes;
+     })    
     default: return state
   }
 }
@@ -59,5 +66,15 @@ export const voteFor = (id) => {
     data: {id}
   }
 }
+
+export const sortByVotes = (ascending) => {
+  if (ascending) return  {type:'SORT_ANECDOTES_ASC'}
+  return {
+    type: 'SORT_ANECDOTES_DSC'
+  }
+  
+}
+
+
 
 export default reducer
