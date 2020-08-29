@@ -2,10 +2,12 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {sortByVotes, voteFor } from '../reducers/anecdoteReducer'
 import {setVoteNotification, resetVoteNotification} from '../reducers/notificationReducer'
-
 const AnecdoteList = () => {
     const dispatch = useDispatch()
-    const anecdotes = useSelector(state => state.anecdotes)
+
+    const anecdotes = useSelector(({filter, anecdotes}) => { 
+            return filter === 'ALL' ? anecdotes : anecdotes.filter(anecdote => anecdote.content.includes(filter))})
+  
     const vote = (anecdote, id) => {
         dispatch(voteFor(id))
         dispatch(sortByVotes(false))
