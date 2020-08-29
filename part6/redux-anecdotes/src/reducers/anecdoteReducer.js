@@ -66,7 +66,10 @@ export const voteFor = (id) => {
     data: {id}
   }
 }
-
+/**
+ * Order the Anecdotes by votes
+ * @param {Sort Ascending if true, descending if false} ascending 
+ */
 export const sortByVotes = (ascending) => {
   if (ascending) return  {type:'SORT_ANECDOTES_ASC'}
   return {
