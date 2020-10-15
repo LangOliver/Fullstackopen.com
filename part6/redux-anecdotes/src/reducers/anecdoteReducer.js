@@ -19,7 +19,7 @@ const asObject = (anecdote) => {
 }
 
 const initialState = anecdotesAtStart.map(asObject)
-const anecdoteReducer = (state = initialState, action) => {
+const anecdoteReducer = (state = [], action) => {
 
   console.log('state now: ', state)
   console.log('action', action)
@@ -30,17 +30,16 @@ const anecdoteReducer = (state = initialState, action) => {
       const anecdoteToChange = state.find(n => n.id === id)
       const changedAnecdote = {
         ...anecdoteToChange, votes: anecdoteToChange.votes + 1}
-      console.log('I\'m the one who should now increment the vote of:', action.data)
       return  state.map(anecdote =>
         anecdote.id !== id ? anecdote : changedAnecdote 
       )
     case 'NEW_ANECDOTE':
-      const newAnecdote = {
-        content: action.data,
-        id: getId(),
-        votes: 0 
-      }
-      return state.concat(newAnecdote)
+      return [...state, action.data]
+
+
+    case 'INIT_ANECDOTES':
+      return action.data
+
     case 'SORT_ANECDOTES_ASC':
       return state.slice().sort(function(a, b) {
         return a.votes - b.votes;
@@ -55,9 +54,14 @@ const anecdoteReducer = (state = initialState, action) => {
 export const createAnecdote = (content) => {
   return {
     type: 'NEW_ANECDOTE',
-    data: content,
-    id: getId(),
-    votes: 0 
+    data: content
+  }
+}
+
+export const initializeAnecdotes = (anecdotes) => {
+  return {
+    type: 'INIT_ANECDOTES',
+    data: anecdotes
   }
 }
 export const voteFor = (id) => {
