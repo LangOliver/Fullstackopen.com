@@ -15,7 +15,19 @@ const notificationsAtStart =
     default: return state
     }
   }
-  
+
+
+  export const setNotification = (notificationText, timeToDisplay) =>  {
+    return dispatch => {
+      dispatch(setVoteNotification(notificationText))
+      
+      setTimeout(() => {
+        dispatch(resetVoteNotification())
+      }, timeToDisplay)
+  } 
+}
+
+
   export const setVoteNotification = (anecdoteText) => {
     return {
       type: 'SET_VOTE_MESSAGE',

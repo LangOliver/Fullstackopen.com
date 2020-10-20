@@ -21,7 +21,6 @@ const anecdotesAtStart = [
 
 //const initialState = anecdotesAtStart.map(asObject)
 const anecdoteReducer = (state = [], action) => {
-
   switch(action.type) {
     case 'VOTE_INCREMENT':
       const id = action.data.id
@@ -69,7 +68,6 @@ export const initializeAnecdotes = () => {
 }
 
 export const voteFor = (anecdote, id) => {
-
   const newAnecdote = {
       content: anecdote.content,
       id: anecdote.id,
