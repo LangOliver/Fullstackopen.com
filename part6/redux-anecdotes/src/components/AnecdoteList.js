@@ -9,7 +9,7 @@ const AnecdoteList = () => {
             return filter === 'ALL' ? anecdotes : anecdotes.filter(anecdote => anecdote.content.includes(filter))})
   
     const vote = (anecdote, id) => {
-        dispatch(voteFor(id))
+        dispatch(voteFor(anecdote, id))
         dispatch(sortByVotes(false))
         dispatch(setVoteNotification(anecdote.content))
         setTimeout(() => {

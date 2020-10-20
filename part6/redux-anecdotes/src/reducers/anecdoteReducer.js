@@ -9,19 +9,18 @@ const anecdotesAtStart = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
-const getId = () => (100000 * Math.random()).toFixed(0)
+//const getId = () => (100000 * Math.random()).toFixed(0)
 
-const asObject = (anecdote) => {
+/* const asObject = (anecdote) => {
   return {
     content: anecdote,
     id: getId(),
     votes: 0
   }
-}
+} */
 
-const initialState = anecdotesAtStart.map(asObject)
+//const initialState = anecdotesAtStart.map(asObject)
 const anecdoteReducer = (state = [], action) => {
-
 
   switch(action.type) {
     case 'VOTE_INCREMENT':
@@ -34,7 +33,6 @@ const anecdoteReducer = (state = [], action) => {
       )
     case 'NEW_ANECDOTE':
       return [...state, action.data]
-
 
     case 'INIT_ANECDOTES':
       return action.data
@@ -69,12 +67,23 @@ export const initializeAnecdotes = () => {
     
   }
 }
-export const voteFor = (id) => {
-  return {
+
+export const voteFor = (anecdote, id) => {
+
+  const newAnecdote = {
+      content: anecdote.content,
+      id: anecdote.id,
+      votes: anecdote.votes
+    }
+
+  return async dispatch =>  { 
+    await anecdotesService.update(newAnecdote)  
+    dispatch({
     type: 'VOTE_INCREMENT',
-    data: {id}
+    data: {id}})
   }
 }
+
 /**
  * Order the Anecdotes by votes
  * @param {Sort Ascending if true, descending if false} ascending 
@@ -86,7 +95,6 @@ export const sortByVotes = (ascending) => {
   }
   
 }
-
 
 
 export default anecdoteReducer
