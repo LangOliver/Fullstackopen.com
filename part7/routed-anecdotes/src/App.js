@@ -65,6 +65,7 @@ const CreateNew = (props) => {
   const info = useField('info')
   const history = useHistory()
 
+  const noReset = ({reset, ...rest}) => rest
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -90,15 +91,15 @@ const CreateNew = (props) => {
       <form onSubmit={handleSubmit} onReset={handleFormReset}>
         <div>
           content
-          <input {...content} />
+          <input {...noReset(content)} />
         </div>
         <div>
           author
-          <input {...author} />
+          <input {...noReset(author)} />
         </div>
         <div>
           url for more info
-          <input {...info}/>
+          <input {...noReset(info)}/>
         </div>
         <button>create</button>
         <input type="reset" value="reset"></input>
