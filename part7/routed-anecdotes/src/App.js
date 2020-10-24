@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { 
-  BrowserRouter as Router,
-Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom"
+import { Switch, Route, Link, useRouteMatch, useHistory } from "react-router-dom"
 
 const Menu = () => {
   const padding = {
@@ -143,9 +141,9 @@ const App = () => {
 
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
-  const padding = { padding: 5 }
   
   const match = useRouteMatch('/anecdotes/:id')
+  
   const anecdote = match 
   ? anecdoteById(match.params.id)
   : null
@@ -156,7 +154,7 @@ const App = () => {
       <p>{notification}</p>
       <Switch>
         <Route path="/create"><CreateNew addNew={addNew}/></Route>
-        <Route path="/about"></Route>
+        <Route path="/about"><About/></Route>
         <Route path="/anecdotes/:id">
           <Anecdote anecdote={anecdote}/>
         </Route>
