@@ -22,28 +22,33 @@ const useCountry = (name) => {
     return await axios(
       'https://restcountries.eu/rest/v2/name/'+ name + '?fullText=true',
       )
-      .then(response => setCountry(response))
+      .then(response => setCountry({
+        found: true,
+        data: response.data[0]
+      }))
       .catch(err => {
         console.log('Error caught in the api call: ',err)
-        setCountry(null)
+        setCountry({found: false})
     })
     }, )
   
   useEffect(() => {
     fetchData()},[name]
   )
-
-  /* Build the object consumed and rendered in the Country Component */
-  var countryObject = null
-  if (country != null) {
-    countryObject = {
-      found: true,
-      data: country.data[0]
-    }
-    return countryObject 
-  }
-  return {found: false}
+  return country;
 }
+
+//   /* Build the object consumed and rendered in the Country Component */
+//   var countryObject = null
+//   if (country != null) {
+//     countryObject = {
+//       found: true,
+//       data: country.data[0]
+//     }
+//     return countryObject 
+//   }
+//   return {found: false}
+// }
 const Country = ({ country }) => { 
   if (!country) { 
     return null
