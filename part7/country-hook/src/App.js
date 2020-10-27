@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const useField = (type) => {
@@ -15,37 +15,32 @@ const useField = (type) => {
   }
 }
 
-const useCountry = (name) => {    
+const useCountry = (name) => {
   const [country, setCountry] = useState(null)
-
-  const fetchData = useCallback(async () => {
-    return await axios(
-      'https://restcountries.eu/rest/v2/name/'+ name + '?fullText=true',
-      )
-      .then(response => setCountry(response))
-      .catch(err => {
-        console.log('Error caught in the api call: ',err)
-        setCountry(null)
-    })
-    }, )
   
   useEffect(() => {
-    fetchData()},[name]
-  )
+    (async () => {
+     const response = await axios.get('https://restcountries.eu/rest/v2/name/' + name);
+     
+    })()
+   },[name] )
 
-  /* Build the object consumed and rendered in the Country Component */
-  var countryObject = null
-  if (country != null) {
-    countryObject = {
-      found: true,
-      data: country.data[0]
-    }
-    return countryObject 
+   if(response.ok) {
+    setCountry({found: true,
+      data: response.data[0]})
+    return country
   }
-  return {found: false}
-}
-const Country = ({ country }) => { 
-  if (!country) { 
+  //if not throw an error to be handled in catch block
+  throw new Error(response);
+})
+.catch(function (error) {
+  //Handle error
+  console.log(error);
+});
+  }
+
+const Country = ({ country }) => {
+  if (!country) {
     return null
   }
 
@@ -67,11 +62,10 @@ const Country = ({ country }) => {
   )
 }
 
-
 const App = () => {
   const nameInput = useField('text')
   const [name, setName] = useState('')
-  const country = useCountry(name) 
+  const country = useCountry(name)
 
   const fetch = (e) => {
     e.preventDefault()
@@ -84,6 +78,7 @@ const App = () => {
         <input {...nameInput} />
         <button>find</button>
       </form>
+
       <Country country={country} />
     </div>
   )

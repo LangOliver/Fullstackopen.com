@@ -31,11 +31,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "quokka": {
-    "name": "country-hook2",
-    "quokka": {
-      "babel": true
-    }
   }
 }
