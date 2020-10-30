@@ -1,6 +1,7 @@
   
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import { Table, Form } from 'react-bootstrap'
 
 
 const useField = (type) => {
@@ -63,22 +64,45 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h2>notes</h2>
-      <form onSubmit={handleNoteSubmit}>
-        <input {...content} />
-        <button>create</button>
-      </form>
-      {notes.map(n => <p key={n.id}>{n.content}</p>)}
+        <div className="container">
+          <h2>notes</h2>
+          <form onSubmit={handleNoteSubmit}>
+            <input {...content} />
+            <button>create</button>
+          </form>
+          <Table striped>
+      <tbody>
+        {notes.map(note =>
+          <tr key={note.id}>
+            <td>
+                {note.content}
+            </td>
+            <td>
+              {note.user}
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </Table>
 
-      <h2>persons</h2>
-      <form onSubmit={handlePersonSubmit}>
-        name <input {...name} /> <br/>
-        number <input {...number} />
-        <button>create</button>
-      </form>
-      {persons.map(n => <p key={n.id}>{n.name} {n.number}</p>)}
-    </div>
+          <h2>persons</h2>
+          <Form onSubmit={handlePersonSubmit}>
+            name <input {...name} /> <br/>
+            number <input {...number} />
+            <button>create</button>
+          </Form>
+          <Table striped>
+      <tbody>
+        {persons.map(person =>
+          <tr key={person.id}>
+            <td>
+                {person.name} {person.number}
+            </td>
+           
+          </tr>
+        )}
+      </tbody>
+    </Table>    </div>
   )
 }
 
