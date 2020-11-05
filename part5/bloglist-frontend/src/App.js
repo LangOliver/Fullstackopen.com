@@ -97,6 +97,7 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
+    console.log(this === window)
     try {
       const user = await loginService.login({
         username, password,
